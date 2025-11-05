@@ -11,6 +11,9 @@ ADMIN_PASSWORD=password
 this now uses 
 `pip install -r requirements.txt`
 
+run with 
+`flask run`
+
 this works, this is ugly
 
 you change the url in /panel
