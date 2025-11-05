@@ -8,9 +8,8 @@ ADMIN_USERNAME=username
 ADMIN_PASSWORD=password
 ```
 
-run `pipenv install` to install the packages
-
-run with `pipenv run start`
+this now uses 
+`pip install -r requirements.txt`
 
 this works, this is ugly
 

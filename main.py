@@ -11,27 +11,34 @@ def verify_password(username, password):
       return True
   return False
 
-@app.before_request
-def before_request():
-    with open("url.txt") as f:
-        g.url = f.read().strip()
+
 
 @app.route('/panel', methods=['GET', 'POST'])
 @auth.login_required
 def panel():
-    success_message = "Current URL: " + g.url
     if request.method == 'POST':
         url = request.form.get('url', '')
         with open("url.txt", "w") as f:
             f.write(url)
-        
+    try:
+        with open("url.txt") as f:
+            saved_url = f.read().strip()
+        success_message = "Current URL: " + saved_url
+    except FileNotFoundError:
+        success_message = "No URL set."
+
     return render_template('panel.jinja', success_message=success_message)
 
 @app.route('/')
 @app.route('/<path:subpath>')
 def home(subpath=None):
-    if(g.url):
-        return redirect(g.url, code=302)
+    try:
+        with open("url.txt") as f:
+            saved_url = f.read().strip()
+    except FileNotFoundError:
+        saved_url = None
+
+    if saved_url:
+        return redirect(saved_url, code=302)
     else:
         return redirect("http://example.com", code=302)
-    
