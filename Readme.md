@@ -9,6 +9,7 @@ ADMIN_PASSWORD=password
 ```
 
 run `pipenv install` to install the packages
+
 run with `pipenv run start`
 
 this works, this is ugly
