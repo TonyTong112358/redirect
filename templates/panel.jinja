@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Url or whatever</title>
+	</head>
+	{% if error =="" %}
+	<body>
+		<h2>Configure Redirect Url</h2>
+		<form method="post" action="/update/redirect">
+			<div>
+				<label for="url">URL</label>
+				<input id="url" name="url" type="text" pattern="https?://.+" required oninvalid="this.setCustomValidity('Please enter a valid URL starting with http:// or https://')" oninput="this.setCustomValidity('')"/>
+			</div>
+			<h3>current redirect path:{{response["url"]}}</h3>
+			<div>
+				<button type="submit">Submit</button>
+			</div>
+		</form>
+
+
+		<h2>Configure response</h2>
+		
+		<form method="post" action = "/update/response">
+			<div>
+				<label for="path">Path</label>
+				<input id="path" name="path" type="text" value="{{response["path"]}}" required />
+			</div>
+			
+			<div>
+				<label for="header"><h1>Header</h1></label>
+				<h4><p>Separate each header with new line. <br>Each will be parsed using Key:value<br>
+				First row is Status_Code:message</p><h4>
+				<textarea id="header" name = "header" rows="6", cols ="50" type="text">{{response["header"]}}</textarea>
+
+
+				<label for="body"><h1>Body</h1></label>
+				<textarea  id="body" name = "body" rows="6", cols ="50" type="text">{{response["body"]}}</textarea>
+				<br>
+				<br>
+				<label for="status_code">status code:</label>
+				<input id="status_code" name="status_code" type="text" value="{{response["status_code"]}}" required />
+			</div>
+			<div>
+				<button type ="submit">Deliver POC</button>
+			</div>
+	
+	</body>
+	{% else %}
+		<body>
+		{{error}}
+		</body>
+		<a href="/panel">
+			<button type="button">Back</button>
+		</a>
+	{% endif %}
+</html>
