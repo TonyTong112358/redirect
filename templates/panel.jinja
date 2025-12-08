@@ -7,6 +7,13 @@
 	</head>
 	{% if error =="" %}
 	<body>
+	
+		<div style="position: absolute; right: 20px; top: 20px;">
+			<a href="/log">
+				<button type="button">Go to Logs</button>
+			</a>
+		</div>
+
 		<h2>Configure Redirect Url</h2>
 		<form method="post" action="/update/redirect">
 			<div>
@@ -29,22 +36,29 @@
 			</div>
 			
 			<div>
-				<label for="header"><h1>Header</h1></label>
+			<div>
+			</div>
+				<label for="header"><h2>Header</h2></label>
 				<h4><p>Separate each header with new line. <br>Each will be parsed using Key:value<br>
 				First row is Status_Code:message</p><h4>
-				<textarea id="header" name = "header" rows="6", cols ="50" type="text">{{response["header"]}}</textarea>
+				<textarea id="header" name = "header" rows="5", cols ="50" type="text">{{response["header"]}}</textarea>
 
-
-				<label for="body"><h1>Body</h1></label>
-				<textarea  id="body" name = "body" rows="6", cols ="50" type="text">{{response["body"]}}</textarea>
-				<br>
+				<label for="body"><h2>Body</h2></label>
+				<textarea  id="body" name = "body" rows="5", cols ="50" type="text">{{response["body"]}}</textarea>
 				<br>
 				<label for="status_code">status code:</label>
 				<input id="status_code" name="status_code" type="text" value="{{response["status_code"]}}" required />
 			</div>
 			<div>
-				<button type ="submit">Deliver POC</button>
+			<button type ="submit">Deliver POC</button>
+			<a href="{{response["path"]}}">
+				<button type="button">View Exploit </button>
+			</a>
 			</div>
+			
+			<div>
+			
+		</div>
 	
 	</body>
 	{% else %}

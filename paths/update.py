@@ -13,7 +13,7 @@ def update_redirect():
     db.commit()
     response = load_panel_value()
 
-    return render_template('panel.jinja', response=response,error= "")
+    return redirect(request.referrer)
 
 @update_bp.route('/update/response', methods=['POST'])
 def update_response():
@@ -43,4 +43,4 @@ def update_response():
 
 
     
-    return render_template('panel.jinja', response=response,error = "")
+    return redirect(request.referrer)

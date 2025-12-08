@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Url or whatever</title>
+	</head>
+	
+<body>
+  <h2>Logs</h2>
+  
+    <form method="get" action="/log" style="margin-bottom: 15px;">
+    <label>
+      Show top
+      <input type="number" name="limit" value="{{ limit }}">
+      entries
+    </label>
+
+    <!-- keep current sort when changing limit -->
+    <input type="hidden" name="sort" value="{{ sort }}">
+    <button type="submit">Apply</button>
+  </form>
+  <ul style="list-style-type: none; padding: 0;">
+    {% for log in logs %}
+      <li style="margin-bottom: 10px;">
+        <details style="border: 1px solid #ccc; border-radius: 6px; padding: 8px;">
+          <summary style="cursor: pointer; font-weight: bold;">
+            ID {{ log["ID"] }} · {{ log["timestamp"] }} · {{ log["ip_address"] | e }}
+            · {{ log["request_method"] | e }} {{ log["request_path"] | e }}
+          </summary>
+
+          <div style="margin-top: 10px;">
+            <p><strong>ID:</strong> {{ log["ID"] }}</p>
+            <p><strong>Timestamp:</strong> {{ log["timestamp"] }}</p>
+            <p><strong>IP:</strong> {{ log["ip_address"] | e }}</p>
+            <p><strong>Method:</strong> {{ log["request_method"] | e }}</p>
+            <p><strong>Path:</strong> {{ log["request_path"] | e }}</p>
+
+            {% if log["request_headers"] %}
+              <p><strong>Headers:</strong></p>
+              <pre>{{ log["request_headers"] | e }}</pre>
+            {% endif %}
+
+            {% if log["request_arguments"] %}
+              <p><strong>Arguments:</strong></p>
+              <pre>{{ log["request_arguments"] | e }}</pre>
+            {% endif %}
+
+            {% if log["request_body"] %}
+              <p><strong>Body:</strong></p>
+              <pre>{{ log["request_body"] | e }}</pre>
+            {% endif %}
+
+            {% if log["notes"] %}
+              <p><strong>Current Notes:</strong> {{ log["notes"] | e }}</p>
+            {% endif %}
+
+            <!-- Notes Form -->
+            <form method="POST" action="/add_note/{{ log['ID'] }}">
+              <label><strong>Add/Edit Notes:</strong></label><br>
+              <textarea name="notes" rows="3" style="width: 100%; margin-top: 5px;"></textarea>
+              <button type="submit" style="margin-top: 8px;">Save Notes</button>
+            </form>
+          </div>
+        </details>
+      </li>
+    {% else %}
+      <li>No logs found.</li>
+    {% endfor %}
+  </ul>
+</body>
+
+	
+</html>
